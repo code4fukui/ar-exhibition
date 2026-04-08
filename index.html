@@ -1,0 +1,99 @@
+
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
+<title>ar-exhibition</title></head><body>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://code4fukui.github.io/three.js/build/three.module.js",
+    "three/addons/": "https://code4fukui.github.io/three.js/examples/jsm/",
+    "three/nodes": "https://code4fukui.github.io/three.js/examples/jsm/nodes/Nodes.js"
+  }
+}
+</script>
+<main><h1>ar-exhibition</h1>
+DATA: 神山まるごと高専 学生
+</main>
+<style>
+main {
+  position: fixed;
+  top: 2em;
+  left: 2em;
+  background-color: rgba(0, 0, 0, .3);
+  padding: 1em;
+  color: white;
+}
+a {
+  color: white !important;
+}
+</style>
+
+<script type="module">
+import { THREE, scene, camera, renderer, ambientLight, directionalLight } from "https://code4fukui.github.io/egxr.js/egxr.js";
+import { loadGLTF } from "https://code4fukui.github.io/vr-beetle/loadGLTF.js";
+import { loadTexture } from "https://code4fukui.github.io/ar-wall/loadTexture.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+import { PCControl } from "https://code4fukui.github.io/vr-beetle/PCControl.js";
+
+
+// control
+const pcctrl = new PCControl(camera, renderer.domElement);
+
+// light
+ambientLight.intensity = 2.0; // 環境光（全体を均一に明るくする）
+directionalLight.intensity = 7.0; // 平行光
+directionalLight.position.set(2, 10, 1); // 上から光
+
+// model
+const imgs = [
+  { fn: "./img1.jpg", height: .32, text: "意味のないツイテール" },
+  { fn: "./img2.jpg", height: .41, text: "できかけのショートケーキ" },
+  { fn: "./img3.png", height: .41, text: "幸福の証明は、幸福の中で不幸に鳴ること" },
+];
+
+const putPicture = async (img, height, x, y, z) => {
+  const tex = await loadTexture(img);
+
+  console.log(tex);
+  const width = tex.source.data.width * height / tex.source.data.height;
+
+  // 平面は XY 平面に置き、カメラは +Z から見る
+  const geo = new THREE.PlaneGeometry(width, height, 1, 1);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping; // 実寸一枚貼り
+  tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy?.() || 1);
+  const mat = new THREE.LineBasicMaterial({
+    map: tex,
+    side: THREE.FrontSide,
+    //color: 0xeeeeff,
+    //color: 0xffffff,
+    //color: 0xff0000, // red for debug
+    //transparent: true,
+    //opacity: 0.85
+  });
+
+  const wall = new THREE.Mesh(geo, mat);
+  wall.position.x = x;
+  wall.position.y = y; // height / 2 + y;
+  wall.position.z = z;
+  scene.add(wall);
+};
+
+for (let i = 0; i < imgs.length; i++) {
+  const img = imgs[i];
+  const x = i * 2;
+  const y = 0;
+  const z = -1;
+  await putPicture(img.fn, img.height * 5, x, 0, z);
+}
+
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+  const t = clock.getElapsedTime();
+  const delta = clock.getDelta();
+  //models.forEach((m, idx) => m.mixer?.update(delta));
+  pcctrl.update(delta);
+  //silks.forEach(i => i.update(t));
+	renderer.render(scene, camera);
+});
+</script>
+</body></html>
