@@ -11,7 +11,8 @@
 }
 </script>
 <main><h1>ar-exhibition</h1>
-DATA: 神山まるごと高専 学生
+DATA: 神山まるごと高専 学生<br>
+<a href=https://github.com/code4fukui/ar-exhibition/>src on GitHub</a><br>
 </main>
 <style>
 main {
@@ -34,7 +35,6 @@ import { loadTexture } from "https://code4fukui.github.io/ar-wall/loadTexture.js
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 import { PCControl } from "https://code4fukui.github.io/vr-beetle/PCControl.js";
 
-
 // control
 const pcctrl = new PCControl(camera, renderer.domElement);
 
@@ -53,7 +53,6 @@ const imgs = [
 const putPicture = async (img, height, x, y, z) => {
   const tex = await loadTexture(img);
 
-  console.log(tex);
   const width = tex.source.data.width * height / tex.source.data.height;
 
   // 平面は XY 平面に置き、カメラは +Z から見る
@@ -88,7 +87,6 @@ for (let i = 0; i < imgs.length; i++) {
 
 const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
-  const t = clock.getElapsedTime();
   const delta = clock.getDelta();
   //models.forEach((m, idx) => m.mixer?.update(delta));
   pcctrl.update(delta);
