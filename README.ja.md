@@ -59,7 +59,7 @@ const imgs = [
 
 このプロジェクトは、以下のオープンソースライブラリを使用して構築されています:
 
--   [three.js](https://code4fukui.github.io/three.js/): JavaScript用の3Dグラフィックスライブラリ。
+-   three.js *(demo unavailable)*: JavaScript用の3Dグラフィックスライブラリ。
 -   [egxr.js](https://code4fukui.github.io/egxr.js/): WebXR開発を簡略化するためのThree.jsラッパー。
 -   [PCControl.js](https://code4fukui.github.io/vr-beetle/PCControl.js): デスクトップでの一人称視点コントロール用モジュール。
 -   [loadTexture.js](https://code4fukui.github.io/ar-wall/loadTexture.js): テクスチャ読み込み用ユーティリティ。

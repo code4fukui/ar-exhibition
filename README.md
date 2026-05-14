@@ -61,7 +61,7 @@ The images included are:
 
 This project is built with several open-source libraries:
 
--   [three.js](https://code4fukui.github.io/three.js/): A 3D graphics library for JavaScript.
+-   three.js *(demo unavailable)*: A 3D graphics library for JavaScript.
 -   [egxr.js](https://code4fukui.github.io/egxr.js/): A wrapper for Three.js to simplify WebXR development.
 -   [PCControl.js](https://code4fukui.github.io/vr-beetle/PCControl.js): A module for first-person desktop controls.
 -   [loadTexture.js](https://code4fukui.github.io/ar-wall/loadTexture.js): A utility for loading textures.
